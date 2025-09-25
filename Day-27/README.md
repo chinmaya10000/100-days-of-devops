@@ -12,3 +12,21 @@ This repository `/usr/src/kodekloudrepos/beta` required reverting the latest com
    ```bash
    cd /usr/src/kodekloudrepos/beta
    ```
+
+2. View commit history (to confirm HEAD and previous commit):
+   ```bash
+   sudo git log --oneline
+   ```
+
+3. Revert the latest commit:
+   ```bash
+   sudo git revert HEAD --no-edit
+   ```
+4. Amend the commit message to match the requirement:
+   ```bash
+   sudo git commit --amend -m "revert beta"
+   ```
+5. Verify the history:
+   ```bash
+   sudo git log --oneline
+   ```
