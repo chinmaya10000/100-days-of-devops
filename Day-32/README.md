@@ -2,36 +2,41 @@
 
 This repository contains the source code for the Nautilus application.
 
-## Repository Path
+## Repository Info
 
-- Original repository: `/opt/cluster.git`
+- Original repo: `/opt/cluster.git`
 - Local clone on storage server: `/usr/src/kodekloudrepos`
 
-## Branching Strategy
+## Situation / Problem
 
-- `master`: Main stable branch.
-- `feature-branch`: Developer branches for ongoing features.
+One of the developers is working on a **feature branch**, and the work is still in progress.  
+Meanwhile, **new changes have been pushed to the `master` branch**.  
 
-## Rebase Instructions
+The developer wants to **update their feature branch with the latest master** without:  
 
-To update your feature branch with the latest master **without creating a merge commit**:
+- Losing any of their ongoing work.  
+- Creating any merge commits (so no `git merge` with a commit).  
+
+## Solution: Rebase Feature Branch on Master
+
+Follow these steps to safely rebase the feature branch:
 
 ```bash
-# Go to repo
+# Go to the repo
 cd /usr/src/kodekloudrepos
 
-# Fetch latest changes
+# Fetch the latest changes from remote
 git fetch origin
 
 # Switch to your feature branch
 git checkout feature-branch
 
-# Rebase on top of master
+# Rebase your feature branch on top of master
 git rebase origin/master
 
-# Resolve any conflicts, then continue
-git add <file>
+# If there are conflicts, fix them in the files and then
+git add <file-with-conflict>
 git rebase --continue
 
-# Push the rebased branch
+# After successful rebase, push the updated feature branch
 git push origin feature-branch --force
