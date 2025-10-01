@@ -20,6 +20,7 @@ Example servers in Stratos DC:
 ```bash
 sudo systemctl status httpd   # RHEL/CentOS
 sudo systemctl status apache2 # Ubuntu/Debian
+```
 
 ### 3. Resolve Port Conflicts
 ```bash
@@ -27,16 +28,19 @@ sudo ss -tulpn | grep 8088
 # Stop Sendmail if not needed
 sudo systemctl stop sendmail
 sudo systemctl disable sendmail
+```
 
 ### 4. Start and Enable Apache
 ```bash
 sudo systemctl start httpd   # RHEL/CentOS
 sudo systemctl enable httpd  # RHEL/CentOS
+```
 
 
 ### 5. Verify Apache is Running on Port 8088
 ```bash
 sudo ss -tulpn | grep httpd
+```
 
 ### 6. Test locally:
 ```bash

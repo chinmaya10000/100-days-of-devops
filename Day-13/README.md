@@ -39,13 +39,15 @@ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 sudo service iptables save
 sudo systemctl enable iptables
 sudo systemctl restart iptables
+```
 
 ### On Ubuntu/Debian:
 ```bash
 sudo netfilter-persistent save
 sudo systemctl enable netfilter-persistent
+```
 
 ## Step 4: Verify rules:
 ```bash
 sudo iptables -L -n -v
-
+```

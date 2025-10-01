@@ -19,6 +19,7 @@ sudo systemctl stop sendmail
 sudo systemctl disable sendmail
 sudo systemctl start httpd
 sudo systemctl enable httpd
+```
 
 
 ## Allow Apache traffic through iptables
@@ -27,6 +28,7 @@ sudo systemctl enable httpd
 sudo iptables -I INPUT -p tcp --dport 6300 -j ACCEPT
 sudo iptables-save | sudo tee /etc/sysconfig/iptables
 sudo systemctl restart iptables
+```
 
 ## Test Connectivity
 ### Step 3

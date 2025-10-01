@@ -17,3 +17,4 @@ As part of the temporary assignment to the Nautilus project, a developer named *
    ```bash
    sudo useradd -e 2024-02-17 rose
    sudo chage -l rose
+   ```

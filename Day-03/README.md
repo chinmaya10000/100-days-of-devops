@@ -8,3 +8,4 @@ As part of a recent security audit, the security team required disabling direct 
 2. Edited the SSH configuration file:
    ```bash
    sudo vi /etc/ssh/sshd_config
+   ```
