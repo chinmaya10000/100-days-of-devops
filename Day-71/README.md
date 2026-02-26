@@ -35,6 +35,7 @@ It uses a **parameterized Jenkins job** that connects via SSH to the remote serv
 
 ```bash
 ssh -o StrictHostKeyChecking=no natasha@ststor01.stratos.xfusioncorp.com "sudo yum install -y $PACKAGE || sudo apt-get install -y $PACKAGE"
+```
 This command:
 
 Connects to the storage server over SSH.
