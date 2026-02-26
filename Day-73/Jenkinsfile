@@ -1,0 +1,47 @@
+pipeline {
+  agent any
+  environment {
+    SRC_HOST = '172.16.238.10'
+    DST_HOST = '172.16.238.15'
+    DST_DIR  = '/usr/src/sysops'
+  }
+  triggers {
+    // adjust frequency if needed; every 2 minutes is aggressive.
+    cron('H/5 * * * *') // example: every 5 minutes (better than every 2)
+  }
+  stages {
+    stage('Transfer logs') {
+      steps {
+        script {
+          withCredentials([
+            sshUserPrivateKey(credentialsId: 'stapp01-ssh', keyFileVariable: 'SRC_KEY', usernameVariable: 'SRC_USER'),
+            sshUserPrivateKey(credentialsId: 'ststor01-ssh', keyFileVariable: 'DST_KEY', usernameVariable: 'DST_USER')
+          ]) {
+            // use bash with strict error handling
+            sh '''
+              set -euo pipefail
+              TMPDIR=$(mktemp -d)
+              RSYNC_OPTS="-az --partial --inplace --no-perms"
+              ssh -i "${SRC_KEY}" -o BatchMode=yes -o StrictHostKeyChecking=accept-new "${SRC_USER}@${SRC_HOST}" 'test -f /var/log/httpd/access_log' || { echo "source access_log missing"; exit 1; }
+              rsync -e "ssh -i ${SRC_KEY} -o BatchMode=yes -o StrictHostKeyChecking=accept-new" ${RSYNC_OPTS} "${SRC_USER}@${SRC_HOST}:/var/log/httpd/access_log" "${TMPDIR}/access_log"
+              rsync -e "ssh -i ${SRC_KEY} -o BatchMode=yes -o StrictHostKeyChecking=accept-new" ${RSYNC_OPTS} "${SRC_USER}@${SRC_HOST}:/var/log/httpd/error_log"  "${TMPDIR}/error_log"
+
+              ssh -i "${DST_KEY}" -o BatchMode=yes -o StrictHostKeyChecking=accept-new "${DST_USER}@${DST_HOST}" "mkdir -p ${DST_DIR}"
+              scp -i "${DST_KEY}" -o BatchMode=yes -o StrictHostKeyChecking=accept-new "${TMPDIR}/access_log" "${DST_USER}@${DST_HOST}:${DST_DIR}/access_log.part"
+              ssh -i "${DST_KEY}" -o BatchMode=yes -o StrictHostKeyChecking=accept-new "${DST_USER}@${DST_HOST}" "mv ${DST_DIR}/access_log.part ${DST_DIR}/access_log"
+
+              scp -i "${DST_KEY}" -o BatchMode=yes -o StrictHostKeyChecking=accept-new "${TMPDIR}/error_log" "${DST_USER}@${DST_HOST}:${DST_DIR}/error_log.part"
+              ssh -i "${DST_KEY}" -o BatchMode=yes -o StrictHostKeyChecking=accept-new "${DST_USER}@${DST_HOST}" "mv ${DST_DIR}/error_log.part ${DST_DIR}/error_log"
+
+              rm -rf "${TMPDIR}"
+            '''
+          }
+        }
+      }
+    }
+  }
+  post {
+    failure { echo "Transfer failed — check logs and connectivity" }
+    success { echo "Transfer finished successfully" }
+  }
+}
