@@ -104,8 +104,3 @@ Finished: SUCCESS
 - Automate job creation with Job DSL or Jenkins Configuration as Code (JCasC).
 
 ---
-
-If you want, I can:
-- generate a Jenkinsfile equivalent Pipeline example,
-- produce a Job DSL or JCasC snippet to create this job automatically,
-- or commit this README to a repository (tell me the repo and branch).
