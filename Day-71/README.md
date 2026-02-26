@@ -47,21 +47,23 @@ Runs non-interactively (no password prompts).
 🔑 Pre-Requisites
 SSH Key Setup
 
-Generate an SSH key on the Jenkins server (if not already existing):
+## Generate an SSH key on the Jenkins server (if not already existing):
 
-bash
+```bash
 Copy code
 ssh-keygen -t rsa -b 4096
-Copy it to the storage server:
+```
+## Copy it to the storage server:
 
-bash
+```bash
 Copy code
 ssh-copy-id natasha@ststor01.stratos.xfusioncorp.com
-Passwordless Sudo Access
+```
+## Passwordless Sudo Access
 
-On the storage server, edit the sudoers file:
+## On the storage server, edit the sudoers file:
 
-bash
+```bash
 Copy code
 sudo visudo
 Add this line:
@@ -70,16 +72,16 @@ sql
 Copy code
 natasha ALL=(ALL) NOPASSWD: ALL
 Jenkins Permissions
+```
+## Jenkins must run as user jenkins with SSH access to the remote host.
 
-Jenkins must run as user jenkins with SSH access to the remote host.
+## 🚀 Usage
+## From Jenkins Dashboard → Select job install-packages.
 
-🚀 Usage
-From Jenkins Dashboard → Select job install-packages.
+## Click Build with Parameters.
 
-Click Build with Parameters.
+## Enter a package name in the PACKAGE field (e.g., httpd, vim, git).
 
-Enter a package name in the PACKAGE field (e.g., httpd, vim, git).
+## Click Build.
 
-Click Build.
-
-Check Console Output for installation logs and success message.
+## Check Console Output for installation logs and success message.
