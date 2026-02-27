@@ -103,7 +103,7 @@ Please respect the original author’s notes and attribution when reusing script
 - LinkedIn: [chinmayap-devops](https://www.linkedin.com/in/chinmayap-devops/)  
 - Location: Bengaluru, India  
 - Role: DevOps Engineer  
-- GitHub: [chinamayadevops](https://github.com/chinamaya10000)
+- GitHub: [chinmaya](https://github.com/chinamaya10000)
 
 ---
 
